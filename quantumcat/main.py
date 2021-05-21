@@ -65,6 +65,21 @@ circuit.cx_gate(0, 1)
 # circuit.cu3_gate(30, 60, 30, 0, 1)
 # circuit.r_gate(30, 60, 0)
 
+def create_circuit_demo():
+    circuit = QCircuit(6)
+    circuit.x_gate(0)
+    circuit.x_gate(3)
+    circuit.measure(0)
+    circuit.measure(3)
+    circuit.draw_circuit(provider=providers.IBM_PROVIDER)
+    print(circuit.execute(provider=providers.IBM_PROVIDER, repetitions=10))
+
+
+def grovers_demo():
+    clause_list_sudoku = [[0, 1], [0, 2], [1, 3], [2, 3]]
+    clause_list_light_board = [[0, 1, 3], [1, 0, 2, 4], [2, 1, 5], [3, 0, 4, 6],
+                               [4, 1, 3, 5, 7], [5, 2, 4, 8], [6, 3, 7], [7, 4, 6, 8],
+                               [8, 5, 7]]
 
     input_arr = [0, 0, 0, 1, 0, 1, 1, 1, 0]
 
@@ -96,4 +111,4 @@ def run_on_real_device():
 
 
 if __name__ == '__main__':
-    random_number_demo()
+    create_circuit_demo()
