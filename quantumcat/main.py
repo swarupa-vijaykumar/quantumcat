@@ -93,7 +93,7 @@ def grovers_demo():
 
 
 def random_number_demo():
-    random_number = RandomNumber(length=4, output_type=constants.DECIMAL)\
+    random_number = RandomNumber(range=(0, 3), output_type=constants.DECIMAL)\
         .execute()
     print(random_number)
 
@@ -108,4 +108,4 @@ def run_on_real_device():
 
 
 if __name__ == '__main__':
-    create_circuit_demo()
+    random_number_demo()
