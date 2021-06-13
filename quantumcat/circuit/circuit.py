@@ -398,6 +398,7 @@ class QCircuit:
 
     def convert_circuit(self):
         converted_q_circuit = None
+        print(self.qubits)
         if self.provider == providers.IBM_PROVIDER:
             converted_q_circuit = convert.to_qiskit(self, self.qubits)
         elif self.provider == providers.GOOGLE_PROVIDER:
@@ -448,3 +449,10 @@ class QCircuit:
     def phase_kickback(self, qubit):
         self.x_gate(qubit)
         self.h_gate(qubit)
+
+    def random_number(self,lower_limit, upper_limit,qubits):
+        print("here")
+        print(qubits)
+        self.operations.append(
+            {OpType.random_number: [qubits], constants.PARAMS: [lower_limit, upper_limit]})
+        return self

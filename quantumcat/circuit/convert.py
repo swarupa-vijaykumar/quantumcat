@@ -79,8 +79,9 @@ def to_cirq(q_circuit, qubits):
         elif cirq_op == OpType.mct_gate:
             mct_named_qubits = helper.named_qubits_for_multi_controlled_op(named_qubits, qargs)
             cirq_qc.append([cirq.ops.X(mct_named_qubits[1]).controlled_by(*mct_named_qubits[0])])
-        # Find a better way to replace the following if
-        elif len(params) > 0 or (inspect.isclass(cirq_op) and helper.is_cirq_custom_class(cirq_op())):
+          # Find a better way to replace the following if
+        elif len(params) > 0 or (inspect.isclass(cirq_op) and helper.is_custom_class(cirq_op())):
+            print(params)
             cirq_qc.append([cirq_op(*params).on(*helper.named_qubits_for_ops(named_qubits, qargs))])
         else:
             cirq_qc.append([cirq_op(*helper.named_qubits_for_ops(named_qubits, qargs))])

@@ -92,10 +92,11 @@ def grovers_demo():
 
 
 def random_number_demo():
-    random_number = RandomNumber(range=(7, 11), output_type=constants.DECIMAL)\
-        .execute(provider=providers.IBM_PROVIDER)
-    print(random_number)
-
+    circuit = QCircuit(5)
+    circuit.random_number(2,10,[0,1,2,3])
+    #circuit.mct_gate([0,1,2],3)
+    circuit.measure_all()
+    circuit.draw_circuit(provider=providers.GOOGLE_PROVIDER)
 
 def run_on_real_device():
     circuit = QCircuit(1)

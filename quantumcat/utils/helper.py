@@ -17,7 +17,7 @@ from quantumcat.gates.custom_gates.cirq import UGate, U1Gate, U2Gate, U3Gate, RX
                                                SXGate, TDGate, RYGate, RYYGate, RZXGate, RZZGate, RZGate, \
                                                CUGate, CU1Gate, CU3Gate, DCXGate, CHGate, CPhaseGate, \
                                                CRXGate, CRYGate, CRZGate, CSXGate, C3XGate, C3SXGate, \
-                                               C4XGate
+                                               C4XGate, RandomNumber
 
 from quantumcat.circuit.op_type import OpType
 from quantumcat.utils import gates_map
@@ -34,7 +34,7 @@ def is_cirq_custom_class(obj):
             isinstance(obj, CU3Gate) or isinstance(obj, DCXGate) or isinstance(obj, CHGate) or \
             isinstance(obj, CPhaseGate) or isinstance(obj, CRXGate) or isinstance(obj, CRYGate) or \
             isinstance(obj, CRZGate) or isinstance(obj, CSXGate) or isinstance(obj, C3XGate) or \
-            isinstance(obj, C3SXGate) or isinstance(obj, C4XGate):
+            isinstance(obj, C3SXGate) or isinstance(obj, C4XGate) or isinstance(obj, RandomNumber):
         return True
     else:
         return False
@@ -55,6 +55,7 @@ def named_qubits_for_ops(named_qubits, qargs):
     if len(qargs) > 1:
         for i in range(len(qargs)):
             for j in range(len(named_qubits)):
+                print(qargs)
                 if named_qubits[j].name == 'q' + str(qargs[i][0]):
                     op_named_qubits.append(named_qubits[j])
     else:
