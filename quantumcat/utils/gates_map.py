@@ -125,4 +125,5 @@ quantumcat_to_cirq = {
     OpType.mct_gate: OpType.mct_gate,
     OpType.measure: OpType.measure,
     OpType.measure_all: OpType.measure_all,
+    OpType.random_number : custom_gates.cirq.RandomNumber,
 }
