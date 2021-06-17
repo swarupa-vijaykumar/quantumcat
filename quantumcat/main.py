@@ -15,7 +15,8 @@
 from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants
 from quantumcat.algorithms import GroversAlgorithm
-from quantumcat.applications.generator import RandomNumber
+from quantumcat.applications.generator import RandInt
+import numpy as np
 
 circuit = QCircuit(2)
 circuit.u3_gate(45, 45, 45, 0)
@@ -92,11 +93,10 @@ def grovers_demo():
 
 
 def random_number_demo():
-    circuit = QCircuit(5)
-    circuit.random_number(2,10,[0,1,2,3])
-    #circuit.mct_gate([0,1,2],3)
-    circuit.measure_all()
-    circuit.draw_circuit(provider=providers.GOOGLE_PROVIDER)
+    num=RandInt(6,27).execute(provider=providers.GOOGLE_PROVIDER)
+    print("number is")
+    print(num)
+
 
 def run_on_real_device():
     circuit = QCircuit(1)
