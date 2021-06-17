@@ -19,7 +19,7 @@ from quantumcat.circuit.op_type import OpType
 from quantumcat.utils import constants, helper
 import cirq
 import inspect
-
+import quantumcat
 
 def to_qiskit(q_circuit, qubits):
     """This function converts quantumcat circuit into qiskit circuit.
@@ -32,10 +32,13 @@ def to_qiskit(q_circuit, qubits):
     num_of_measurements = helper.num_of_measurements(operations)
     qiskit_qc = QuantumCircuit(qubits, qubits) if num_of_measurements > 0 else QuantumCircuit(qubits)
     for op in operations:
+        #print(op)
         params = []
         operation = next(iter(op.items()))
+        #print(operation[0])
         qiskit_op = gates_map.quantumcat_to_qiskit[operation[0]]
         qargs = operation[1]
+        #print(qargs)
         if constants.PARAMS in op:
             params = (op[constants.PARAMS])
 
@@ -46,6 +49,8 @@ def to_qiskit(q_circuit, qubits):
         elif qiskit_op == OpType.mct_gate:
             qiskit_qc.mcx(control_qubits=qargs[0], target_qubit=qargs[1],
                           ancilla_qubits=qargs[2], mode=qargs[3])
+        elif qiskit_op == OpType.unitary:
+            qiskit_qc.unitary(params[0],qargs[0])
         else:
             qiskit_qc.append(qiskit_op(*params), qargs)
 
@@ -78,8 +83,12 @@ def to_cirq(q_circuit, qubits):
             mct_named_qubits = helper.named_qubits_for_multi_controlled_op(named_qubits, qargs)
             cirq_qc.append([cirq.ops.X(mct_named_qubits[1]).controlled_by(*mct_named_qubits[0])])
           # Find a better way to replace the following if
+        elif cirq_op == quantumcat.gates.custom_gates.cirq.unitary.Unitary: 
+            qubits=[]
+            for i in qargs[0]:
+                qubits.append([i])
+            cirq_qc.append([cirq_op(*params).on(*helper.named_qubits_for_ops(named_qubits, qubits))])
         elif len(params) > 0 or (inspect.isclass(cirq_op) and helper.is_custom_class(cirq_op())):
-            print(params)
             cirq_qc.append([cirq_op(*params).on(*helper.named_qubits_for_ops(named_qubits, qargs))])
         else:
             cirq_qc.append([cirq_op(*helper.named_qubits_for_ops(named_qubits, qargs))])
