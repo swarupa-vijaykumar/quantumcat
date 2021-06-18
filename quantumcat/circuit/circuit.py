@@ -402,15 +402,9 @@ class QCircuit:
             converted_q_circuit = convert.to_qiskit(self, self.qubits)
         elif self.provider == providers.GOOGLE_PROVIDER:
             converted_q_circuit = convert.to_cirq(self, self.qubits)
-<<<<<<< HEAD
-        elif self.provider == providers.AMAZON_PROVIDER:
-            converted_q_circuit = convert.to_braket(self, self.qubits)
-        if self.provider == providers.MICROSOFT_PROVIDER:
-=======
         elif self.provider == providers.IONQ_PROVIDER:
             converted_q_circuit = convert.to_cirq(self, self.qubits)
         elif self.provider == providers.MICROSOFT_PROVIDER:
->>>>>>> 9f72d3a (Added support for IonQ)
             converted_q_circuit = convert.to_q_sharp(self, self.qubits)
         return converted_q_circuit
 
@@ -449,7 +443,11 @@ class QCircuit:
         self.x_gate(qubit)
         self.h_gate(qubit)
 
+<<<<<<< HEAD
     def unitary(self,matrix,*args):
+=======
+    def unitary(self, matrix, *args):
+>>>>>>> 0f49bcf (Implemented range for random number)
         self.operations.append({OpType.unitary: args[:],
                                 constants.PARAMS: [matrix, len(*args)]})
         return self

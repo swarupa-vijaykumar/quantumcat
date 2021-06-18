@@ -15,55 +15,8 @@
 from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants
 from quantumcat.algorithms import GroversAlgorithm
-from quantumcat.applications.generator import RandInt
-import numpy as np
+from quantumcat.applications.generator import RandomNumber, RandInt
 
-circuit = QCircuit(2)
-circuit.u3_gate(45, 45, 45, 0)
-circuit.cx_gate(0, 1)
-# circuit.x_gate(0)
-
-# circuit.z_gate(0)
-# circuit.ccx_gate(0, 1, 2)
-# circuit.s_gate(0)
-# circuit.sdg_gate(1)
-# circuit.swap_gate(0, 2)
-# circuit.iswap_gate(1, 2)
-# circuit.sx_gate(0)
-# circuit.sxd_gate(1)
-# circuit.t_gate(0)
-# circuit.td_gate(1)
-# circuit.i_gate(1)
-# circuit.cy_gate(0, 1)
-# circuit.cz_gate(0, 1)
-# circuit.cswap_gate(0, 1, 2)
-# circuit.rx_gate(30, 0)
-# circuit.ry_gate(30, 0)
-# circuit.cphase_gate(30, 0, 1)
-# circuit.ryy_gate(30, 0, 1)
-# circuit.rz_gate(30, 0)
-# circuit.rxx_gate(30, 0, 1)
-# circuit.p_gate(30, 0)
-# circuit.rzz_gate(30, 0, 1)
-# circuit.u1_gate(30, 1)
-# circuit.ch_gate(0, 1)
-# circuit.crx_gate(30, 0, 1)
-# circuit.cry_gate(40, 0, 1)
-# circuit.crz_gate(60, 0, 1)
-# circuit.csx_gate(0, 1)
-# circuit.cu1_gate(30, 0, 1)
-# circuit.dcx_gate(0, 1)
-# circuit.rc3x_gate(0, 1, 2, 3)
-# circuit.rccx_gate(0, 1, 2)
-# circuit.rzx_gate(30, 0, 1)
-
-# gates having multiple angles
-# circuit.u3_gate(30, 40, 2, 0)
-# circuit.u2_gate(30, 20, 0)
-# circuit.u_gate(40, 60, 3, 1)
-# circuit.cu_gate(30, 60, 20, 60, 0, 1)
-# circuit.cu3_gate(30, 60, 30, 0, 1)
-# circuit.r_gate(30, 60, 0)
 
 def create_circuit_demo():
     circuit = QCircuit(2)
@@ -93,9 +46,17 @@ def grovers_demo():
 
 
 def random_number_demo():
+<<<<<<< HEAD
     num=RandInt(6,27).execute(provider=providers.GOOGLE_PROVIDER)
     print("number is")
     print(num)
+=======
+    # random_number = RandomNumber(range=(7, 11), output_type=constants.DECIMAL)\
+    #     .execute(provider=providers.IBM_PROVIDER)
+    random_number = RandInt(range=(7, 11)) \
+        .execute(provider=providers.IBM_PROVIDER)
+    print(random_number)
+>>>>>>> 0f49bcf (Implemented range for random number)
 
 
 def run_on_real_device():

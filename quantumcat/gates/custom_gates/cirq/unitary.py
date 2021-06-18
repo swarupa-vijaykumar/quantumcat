@@ -12,16 +12,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import cirq
-import numpy as np
-import math
 
 
 class Unitary(cirq.Gate):
-    
-    def __init__(self,matrix,bits):
+
+    def __init__(self, matrix, bits):
         super(Unitary, self).__init__()
-        self.matrix=matrix
-        self.bits=bits
+        self.matrix = matrix
+        self.bits = bits
 
     def _num_qubits_(self):
         return self.bits
@@ -30,4 +28,4 @@ class Unitary(cirq.Gate):
         return self.matrix
 
     def _circuit_diagram_info_(self, args):
-        return ["Random number matrix"]*self.bits
+        return ["Random number matrix"] * self.bits
