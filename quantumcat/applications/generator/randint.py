@@ -17,14 +17,13 @@ from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants, helper
 import math
 import numpy as np
-from quantumcat.gates import custom_gates
 
 
 class RandInt:
-    def __init__(self, lower_limit, upper_limit, output_type=constants.DECIMAL):
+    def __init__(self, range, output_type=constants.DECIMAL):
         super(RandInt, self).__init__()
-        self.upper_limit = upper_limit
-        self.lower_limit = lower_limit
+        self.upper_limit = range[1]
+        self.lower_limit = range[0]
         self.num_qubits = self.get_num_bits()
         self.output_type = output_type
         self.provider = providers.DEFAULT_PROVIDER
@@ -32,45 +31,41 @@ class RandInt:
         self.qc = None
 
     def get_num_bits(self):
-        return math.floor(math.log(self.upper_limit,2))+1
-    
-    def zero_rows(self):
-        lst=[]
-        lst=list(range(0,self.lower_limit))
-        lst.extend(list((range(self.upper_limit+1,2**self.num_qubits))))
-        return lst
-    
+        return math.floor(math.log(self.upper_limit, 2)) + 1
 
-    def make_matrix(self,lst):
-        H=[[1,1],
-          [1,-1]]
-        H2=H
-        for i in range(self.num_qubits-1):
-            H2=np.kron(H2,H)
+    def zero_rows(self):
+        lst = []
+        lst = list(range(0, self.lower_limit))
+        lst.extend(list((range(self.upper_limit + 1, 2 ** self.num_qubits))))
+        return lst
+
+    def make_matrix(self, lst):
+        H = [[1, 1],
+             [1, -1]]
+        H2 = H
+        for i in range(self.num_qubits - 1):
+            H2 = np.kron(H2, H)
         for i in lst:
-            H2[i]=np.zeros(1)
+            H2[i] = np.zeros(1)
         return H2
-    
+
     @staticmethod
-    def gs(self,matrix):
+    def gs(self, matrix):
         Q, R = np.linalg.qr(matrix)
         return Q
 
     def unitary_matrix_gen(self):
-        lst=self.zero_rows()
+        lst = self.zero_rows()
         matrix = self.make_matrix(lst)
-        self.unitary_matrix= self.gs(self,matrix)
+        self.unitary_matrix = self.gs(self, matrix)
 
     def make_circuit(self):
-        
         self.unitary_matrix_gen()
-        qubits=list(range(0, self.num_qubits))
+        qubits = list(range(0, self.num_qubits))
         qc = QCircuit(self.num_qubits)
-        self.qc=qc
-        qc.unitary(self.unitary_matrix,qubits)
+        self.qc = qc
+        qc.unitary(self.unitary_matrix, qubits)
         qc.measure_all()
-        #self.qc.draw_circuit(provider=providers.GOOGLE_PROVIDER)
-        
 
     def execute(self, provider=providers.DEFAULT_PROVIDER,
                 simulator_name=constants.DEFAULT_SIMULATOR, api=None, device=None):
@@ -80,19 +75,11 @@ class RandInt:
 
         random_number = list(counts.keys())[0]
         if self.output_type == constants.DECIMAL:
-            if(provider == providers.GOOGLE_PROVIDER):
+            if provider == providers.GOOGLE_PROVIDER:
                 random_number = random_number[::-1]
             random_number = helper.binary_to_decimal(random_number)
-        return counts
+        return random_number
 
     def draw_random_number_circuit(self, provider=providers.DEFAULT_PROVIDER):
         self.make_circuit()
         return self.qc.draw_circuit(provider=provider)
-
-
-
-
-
-    
-
-    

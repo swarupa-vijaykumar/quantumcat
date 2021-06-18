@@ -441,7 +441,7 @@ class QCircuit:
         self.x_gate(qubit)
         self.h_gate(qubit)
 
-    def unitary(self,matrix,*args):
+    def unitary(self, matrix, *args):
         self.operations.append({OpType.unitary: args[:],
                                 constants.PARAMS: [matrix, len(*args)]})
         return self

@@ -15,8 +15,7 @@
 from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants
 from quantumcat.algorithms import GroversAlgorithm
-from quantumcat.applications.generator import RandInt
-import numpy as np
+from quantumcat.applications.generator import RandomNumber, RandInt
 
 
 def create_circuit_demo():
@@ -47,9 +46,11 @@ def grovers_demo():
 
 
 def random_number_demo():
-    num=RandInt(6,27).execute(provider=providers.GOOGLE_PROVIDER)
-    print("number is")
-    print(num)
+    # random_number = RandomNumber(range=(7, 11), output_type=constants.DECIMAL)\
+    #     .execute(provider=providers.IBM_PROVIDER)
+    random_number = RandInt(range=(7, 11)) \
+        .execute(provider=providers.IBM_PROVIDER)
+    print(random_number)
 
 
 def run_on_real_device():
