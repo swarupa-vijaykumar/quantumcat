@@ -46,17 +46,11 @@ def grovers_demo():
 
 
 def random_number_demo():
-<<<<<<< HEAD
-    num=RandInt(6,27).execute(provider=providers.GOOGLE_PROVIDER)
-    print("number is")
-    print(num)
-=======
     # random_number = RandomNumber(range=(7, 11), output_type=constants.DECIMAL)\
     #     .execute(provider=providers.IBM_PROVIDER)
     random_number = RandInt2(range=(7, 11)) \
         .execute(provider=providers.IBM_PROVIDER)
     print(random_number)
->>>>>>> 0f49bcf (Implemented range for random number)
 
 
 def run_on_real_device():

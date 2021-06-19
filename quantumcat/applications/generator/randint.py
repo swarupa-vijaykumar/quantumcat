@@ -17,7 +17,6 @@ from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants, helper
 import math
 import numpy as np
-from scipy.linalg import hadamard
 
 class RandInt:
     def __init__(self, range, output_type=constants.DECIMAL):
@@ -40,10 +39,14 @@ class RandInt:
         return lst
 
     def make_matrix(self, lst):
-        H=hadamard(2**self.num_qubits)
+        H = [[1, 1],
+             [1, -1]]
+        H2 = H
+        for i in range(self.num_qubits - 1):
+            H2 = np.kron(H2, H)
         for i in lst:
-            H[i] = np.zeros(1)
-        return H
+            H2[i] = np.zeros(1)
+        return H2
 
     @staticmethod
     def gs(self, matrix):
@@ -66,7 +69,7 @@ class RandInt:
     def execute(self, provider=providers.DEFAULT_PROVIDER,
                 simulator_name=constants.DEFAULT_SIMULATOR, api=None, device=None):
         self.make_circuit()
-        counts = self.qc.execute(provider=provider, repetitions=1,
+        counts = self.qc.execute(provider=provider, repetitions=1024,
                                  simulator_name=simulator_name, api=api, device=device)
 
         random_number = list(counts.keys())[0]

@@ -28,7 +28,7 @@ class RandInt2:
         self.output_type = output_type
         self.provider = providers.DEFAULT_PROVIDER
         self.unitary_matrix = None
-        self.hadamard_matrix= hadamard(2**self.num_qubits)
+        self.hadamard_matrix = hadamard(2 ** self.num_qubits)
         self.qc = None
 
     def get_num_bits(self):
@@ -52,18 +52,17 @@ class RandInt2:
         return Q
 
     def unitary_matrix_gen(self):
-        #making the unitary inverse hadamard matrix
-        hadamard_unitary = self.gs(self , self.hadamard_matrix)
+        # making the unitary inverse hadamard matrix
+        hadamard_unitary = self.gs(self, self.hadamard_matrix)
         unitary_had_inv = np.linalg.inv(hadamard_unitary)
-        
 
-        #making the unitary final matrix
+        # making the unitary final matrix
         lst = self.zero_rows()
         matrix = self.make_final_matrix(lst)
         final_matrix = self.gs(self, matrix)
 
-        #making the unitary matrix to use in circuit circuit
-        self.unitary_matrix = np.matmul(final_matrix,unitary_had_inv)
+        # making the unitary matrix to use in circuit circuit
+        self.unitary_matrix = np.matmul(final_matrix, unitary_had_inv)
 
     def make_circuit(self):
         self.unitary_matrix_gen()
@@ -86,7 +85,7 @@ class RandInt2:
             if provider == providers.GOOGLE_PROVIDER:
                 random_number = random_number[::-1]
             random_number = helper.binary_to_decimal(random_number)
-        return counts
+        return random_number
 
     def draw_random_number_circuit(self, provider=providers.DEFAULT_PROVIDER):
         self.make_circuit()
