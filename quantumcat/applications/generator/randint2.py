@@ -77,7 +77,7 @@ class RandInt2:
     def execute(self, provider=providers.DEFAULT_PROVIDER,
                 simulator_name=constants.DEFAULT_SIMULATOR, api=None, device=None):
         self.make_circuit()
-        counts = self.qc.execute(provider=provider, repetitions=8192,
+        counts = self.qc.execute(provider=provider, repetitions=1,
                                  simulator_name=simulator_name, api=api, device=device)
 
         random_number = list(counts.keys())[0]

@@ -41,7 +41,7 @@ def is_cirq_custom_class(obj):
 
 
 def is_braket_custom_gate(opType):
-    if opType == OpType.u2_gate or opType == OpType.u3_gate:
+    if opType == OpType.u2_gate or opType == OpType.u3_gate or opType == OpType.unitary :
         return True
     else:
         return False

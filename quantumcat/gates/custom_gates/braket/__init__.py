@@ -15,6 +15,8 @@
 
 from quantumcat.gates.custom_gates.braket.u2_gate import U2Gate
 from quantumcat.gates.custom_gates.braket.u3_gate import U3Gate
+from quantumcat.gates.custom_gates.braket.unitary import Unitary
+
 
 
 

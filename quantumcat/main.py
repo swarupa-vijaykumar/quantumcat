@@ -16,14 +16,17 @@ from quantumcat.circuit import QCircuit
 from quantumcat.utils import providers, constants
 from quantumcat.algorithms import GroversAlgorithm
 from quantumcat.applications.generator import RandomNumber, RandInt2
+import numpy as np
 
 
 def create_circuit_demo():
+    H=[[0.5,0.5,0.5,0.5],[0.5,-0.5,0.5,-0.5],[0.5,0.5,-0.5,-0.5],[0.5,-0.5,-0.5,0.5]]
     circuit = QCircuit(2)
-    circuit.x_gate(0)
+    #circuit.u3_gate(10,20,30,0)
+    circuit.unitary(H,[0,1])
     circuit.measure_all()
     # circuit.draw_circuit(provider=providers.IBM_PROVIDER)
-    print(circuit.execute(provider=providers.GOOGLE_PROVIDER, repetitions=10))
+    print(circuit.execute(provider=providers.AMAZON_PROVIDER, repetitions=10))
 
 
 def grovers_demo():
@@ -48,8 +51,8 @@ def grovers_demo():
 def random_number_demo():
     # random_number = RandomNumber(range=(7, 11), output_type=constants.DECIMAL)\
     #     .execute(provider=providers.IBM_PROVIDER)
-    random_number = RandInt2(range=(7, 11)) \
-        .execute(provider=providers.IBM_PROVIDER)
+    random_number = RandInt2(range=(5, 6)) \
+        .execute(provider=providers.AMAZON_PROVIDER)
     print(random_number)
 
 
@@ -63,4 +66,5 @@ def run_on_real_device():
 
 
 if __name__ == '__main__':
+    #create_circuit_demo()
     random_number_demo()
