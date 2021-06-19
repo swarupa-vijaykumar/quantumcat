@@ -40,13 +40,6 @@ def is_cirq_custom_class(obj):
         return False
 
 
-def is_braket_custom_gate(opType):
-    if opType == OpType.u2_gate or opType == OpType.u3_gate or opType == OpType.unitary :
-        return True
-    else:
-        return False
-
-
 def num_of_measurements(operations):
     return sum(1 for op in operations if gates_map.quantumcat_to_qiskit[next(iter(op.items()))[0]] == OpType.measure)
 
